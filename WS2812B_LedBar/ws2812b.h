@@ -12,14 +12,16 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-/* Configuration */
+/* Output configuration */
 #define WS2812B_DDR	 DDRD
 #define WS2812B_PORT PORTD
 #define WS2812B_PIN	 PD3
-#define WS2812B_LEDS_COUNT 60
+
+/* Led bar constants */
+#define WS2812B_LEDS_COUNT 10
 #define WS2812B_BITS_PER_LED 24
 #define WS2812B_BIT_SIZE (WS2812B_LEDS_COUNT * WS2812B_BITS_PER_LED)
-#define WS2812B_RESET_DELAY 60
+#define WS2812B_RESET_DELAY 200 // in microseconds
 
 /* Macros */
 #define SetWs2812bPinHigh() WS2812B_PORT |= (1 << WS2812B_PIN)

@@ -9,36 +9,41 @@
 
 void LedBarInit(void)
 {
+	/* Set pin as output and drive it Low */
 	WS2812B_DDR |= (1 << WS2812B_PIN);
 	WS2812B_PORT &= ~(1 << WS2812B_PIN);
 }
 
 static void LedBarSendLogicZero(void)
 {
+	/* Set pin high for ca 350 us */
 	SetWs2812bPinHigh();
 	asm volatile ("nop"::);
+
+	/* Set pin low for ca 900 us */
 	SetWs2812bPinLow();
-	/* commented because only Pin high time matters
-	asm volatile ("nop"::);
-	asm volatile ("nop"::);
-	asm volatile ("nop"::);
-	asm volatile ("nop"::);
-	asm volatile ("nop"::); 
-	*/
+	
+	/* No 'nops' here because other instructions takes 
+	 * enough time and only Pin high time really matters 
+	 */
 }
 
 static void LedBarSendLogicOne(void)
 {
+	/* Set pin high for ca 900 us */
 	SetWs2812bPinHigh();
 	asm volatile ("nop"::);
 	asm volatile ("nop"::);
 	asm volatile ("nop"::);
 	asm volatile ("nop"::);
 	asm volatile ("nop"::);
+
+	/* Set pin low for ca 350 us */
 	SetWs2812bPinLow();
-	/* commented because only Pin high time matters
-	asm volatile ("nop"::); 
-	*/
+	
+	/* No 'nops' here because other instructions takes 
+	 * enough time and only Pin high time really matters 
+	 */
 }
 
 void LedBarClear(void)
@@ -48,6 +53,7 @@ void LedBarClear(void)
 		LedBarSendLogicZero();
 	}
 
+	/* Release the leds */
 	SetWs2812bPinLow();
 	_delay_us(WS2812B_RESET_DELAY);
 }
@@ -78,8 +84,6 @@ void LedBarSendColor(uint8_t red, uint8_t green, uint8_t blue)
 	(blue & 0x04) ? LedBarSendLogicOne() : LedBarSendLogicZero();
 	(blue & 0x02) ? LedBarSendLogicOne() : LedBarSendLogicZero();
 	(blue & 0x01) ? LedBarSendLogicOne() : LedBarSendLogicZero();
-
-	SetWs2812bPinLow();
 }
 
 void LedBarFillWithColor(uint8_t red, uint8_t green, uint8_t blue)
@@ -88,4 +92,8 @@ void LedBarFillWithColor(uint8_t red, uint8_t green, uint8_t blue)
 	{
 		LedBarSendColor(red, green, blue);
 	}
+
+	/* Release the leds */
+	SetWs2812bPinLow();
+	_delay_us(WS2812B_RESET_DELAY);
 }
