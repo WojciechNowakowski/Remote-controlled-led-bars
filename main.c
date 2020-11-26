@@ -1,21 +1,66 @@
 /*
- * main.c
+ * Copyright (c) 2014-2020 Wojciech Nowakowski Tronix
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+/*
+ * main.c - C source file of main application
  *
  * Created: 2014-05-21 14:36:46
- *  Author: Wojciech
+ *  Author: Wojciech Nowakowski
  */ 
-
-
+/*===================================================================================================================*\
+  Preprocessor #include directives
+\*===================================================================================================================*/
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <avr/io.h>
 #include "ws2812b.h"
 
+/*===================================================================================================================*\
+  Local preprocessor constant values
+\*===================================================================================================================*/
+/*===================================================================================================================*\
+  Local type declarations (enum, struct, union, typedef)
+\*===================================================================================================================*/
+/*===================================================================================================================*\
+  Exported object definitions
+\*===================================================================================================================*/
+/*===================================================================================================================*\
+  Local object definitions
+\*===================================================================================================================*/
 volatile uint8_t ir_flag = 0;
 volatile uint8_t ir_bod_counter = 0;
 volatile uint8_t ir_bod_table[66] = {0};
 volatile uint8_t czas = 0;
 volatile uint8_t timer_overflow = 1;
+
+/*===================================================================================================================*\
+  Local function prototypes
+\*===================================================================================================================*/
+/*===================================================================================================================*\
+  Local inline function definitions and function-like macros
+\*===================================================================================================================*/
+/*===================================================================================================================*\
+  Function definitions
+\*===================================================================================================================*/
 
 ISR(INT0_vect)	// pilot RC5
 {
@@ -50,7 +95,7 @@ void remote_init_pilot(void)
 	/* Pin as Input, no pull-up */
 	DDRD  &= ~(1 << PD2);
 	PORTD &= ~(1 << PD2);
-	MCUCR = (1 << ISC01) | (1 << ISC00); // narastaj¹ce zbocze
+	MCUCR = (1 << ISC01) | (1 << ISC00); // narastajï¿½ce zbocze
 	GIMSK |= (1 << INT0);
 	
 	/* Timer/Counter0 Overflow Interrupt Enable */
