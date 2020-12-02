@@ -91,6 +91,7 @@
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
       <Value>../WS2812B_LedBar</Value>
+      <Value>../RC5_IR_Remote</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -130,6 +131,7 @@
         <avrgcc.compiler.directories.IncludePaths>
           <ListValues>
             <Value>../WS2812B_LedBar</Value>
+            <Value>../RC5_IR_Remote</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -155,6 +157,12 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="RC5_IR_Remote\rc5_ir_remote.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="RC5_IR_Remote\rc5_ir_remote.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="WS2812B_LedBar\ws2812b.c">
       <SubType>compile</SubType>
     </Compile>
@@ -163,6 +171,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="RC5_IR_Remote" />
     <Folder Include="WS2812B_LedBar" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
