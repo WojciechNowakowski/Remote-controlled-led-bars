@@ -49,7 +49,7 @@
 #define WS2812B_LEDS_COUNT 10
 #define WS2812B_BITS_PER_LED 24
 #define WS2812B_BIT_SIZE (WS2812B_LEDS_COUNT * WS2812B_BITS_PER_LED)
-#define WS2812B_RESET_DELAY 200 // in microseconds
+#define WS2812B_RESET_DELAY_TIME 200 // in microseconds
 
 /*============================================================================*\
   Exported type declarations (enum, struct, union, typedef)
@@ -60,8 +60,9 @@
 /*============================================================================*\
   Exported inline function definitions and function-like macros
 \*============================================================================*/
-#define SetWs2812bPinHigh() WS2812B_PORT |= (1 << WS2812B_PIN)
-#define SetWs2812bPinLow()  WS2812B_PORT &= ~(1 << WS2812B_PIN)
+#define Ws2812b_SetPinHigh() WS2812B_PORT |= (1 << WS2812B_PIN)
+#define Ws2812b_SetPinLow()  WS2812B_PORT &= ~(1 << WS2812B_PIN)
+#define Ws2812b_ResetDelay() _delay_us(WS2812B_RESET_DELAY_TIME)
 
 /*============================================================================*\
   Exported function prototypes

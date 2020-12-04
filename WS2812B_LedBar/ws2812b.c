@@ -26,6 +26,7 @@
  * Created: 2020-11-08 18:50:11
  *  Author: Wojciech Nowakowski
  */ 
+
 /*============================================================================*\
   Preprocessor #include directives
 \*============================================================================*/
@@ -62,11 +63,11 @@ void LedBarInit(void)
 static void LedBarSendLogicZero(void)
 {
 	/* Set pin high for ca 350 us */
-	SetWs2812bPinHigh();
+	Ws2812b_SetPinHigh();
 	asm volatile ("nop"::);
 
 	/* Set pin low for ca 900 us */
-	SetWs2812bPinLow();
+	Ws2812b_SetPinLow();
 	
 	/* No 'nops' here because other instructions takes 
 	 * enough time and only Pin high time really matters 
@@ -76,7 +77,7 @@ static void LedBarSendLogicZero(void)
 static void LedBarSendLogicOne(void)
 {
 	/* Set pin high for ca 900 us */
-	SetWs2812bPinHigh();
+	Ws2812b_SetPinHigh();
 	asm volatile ("nop"::);
 	asm volatile ("nop"::);
 	asm volatile ("nop"::);
@@ -84,7 +85,7 @@ static void LedBarSendLogicOne(void)
 	asm volatile ("nop"::);
 
 	/* Set pin low for ca 350 us */
-	SetWs2812bPinLow();
+	Ws2812b_SetPinLow();
 	
 	/* No 'nops' here because other instructions takes 
 	 * enough time and only Pin high time really matters 
@@ -100,8 +101,8 @@ void LedBarClear(void)
 
 	/* Reset the signal line, so next operations would
 	 * affect the leds in bar from the beginning, not further */
-	SetWs2812bPinLow();
-	_delay_us(WS2812B_RESET_DELAY);
+	Ws2812b_SetPinLow();
+	Ws2812b_ResetDelay();
 }
 
 void LedBarSendColor(uint8_t red, uint8_t green, uint8_t blue)
@@ -140,6 +141,6 @@ void LedBarFillWithColor(uint8_t red, uint8_t green, uint8_t blue)
 	}
 
 	/* Release the leds */
-	SetWs2812bPinLow();
-	_delay_us(WS2812B_RESET_DELAY);
+	Ws2812b_SetPinLow();
+	Ws2812b_ResetDelay();
 }
